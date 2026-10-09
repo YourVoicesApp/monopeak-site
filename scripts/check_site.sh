@@ -50,17 +50,45 @@ else
   say PASS "no JavaScript, no handler, no cookie, no counter"
 fi
 
-# The webmail keeps /mail/, /mailbox/ and /pilot/ on this same domain. This
-# site replaces the redirect at the root and may not reach into them: one link
-# from here and a crawler walks into a mailbox login.
-INTO=$(grep -rnoE 'href="/(mail|mailbox|pilot)(/[^"]*)?"' --include='*.html' . 2>/dev/null || true)
-if [ -n "$(printf '%s' "$INTO" | tr -d '[:space:]')" ]; then
-  say FAIL "a link from this site reaches into the webmail's paths:"
-  printf '%s\n' "$INTO" | sed 's/^/           /'
-  FAIL=1
-else
-  say PASS "nothing here links into /mail/, /mailbox/ or /pilot/"
+# The webmail lives on this same domain, and until the owner's ruling of
+# 9 October this site was forbidden to reach into any of its paths. That
+# ruling opened **one** door and only one: this is the screen people arrive at
+# to reach their mail through the web, there is no mail application of ours,
+# so a clear way in belongs here.
+#
+# So the rule is now two rules, and the second is the one that needs a guard:
+#
+#   1. every page carries the way in, and its destination is `/mail/` to the
+#      character — the sign-in the webmail serves, not a page inside it;
+#   2. `/mailbox/` and `/pilot/` stay shut, as they were.
+#
+# Written the positive way round. A guard that only forbade the two would pass
+# a page that quietly lost its button, and a guard that only looked for the
+# button would pass one pointing at `/mail/inbox`.
+SHUT=$(grep -rnoE 'href="/(mailbox|pilot)(/[^"]*)?"' --include='*.html' . 2>/dev/null || true)
+STRAY=$(grep -rnoE 'href="/mail/[^"]+"' --include='*.html' . 2>/dev/null || true)
+DOOR=0
+if [ -n "$(printf '%s' "$SHUT" | tr -d '[:space:]')" ]; then
+  say FAIL "a link from this site reaches into a path that is not ours to open:"
+  printf '%s\n' "$SHUT" | sed 's/^/           /'
+  FAIL=1; DOOR=1
 fi
+if [ -n "$(printf '%s' "$STRAY" | tr -d '[:space:]')" ]; then
+  say FAIL "a link goes past the webmail's own front door into a page inside it:"
+  printf '%s\n' "$STRAY" | sed 's/^/           /'
+  FAIL=1; DOOR=1
+fi
+while IFS= read -r f; do
+  n=$(grep -c 'class="signin"' "$f" 2>/dev/null || true); n=${n:-0}
+  if [ "$n" != 1 ]; then
+    say FAIL "${f#./} carries $n ways in to the mail, and every page carries exactly one"; FAIL=1; DOOR=1
+  elif ! grep -q '<a class="signin" href="/mail/"' "$f"; then
+    say FAIL "${f#./} has a way in to the mail that does not point at /mail/:"
+    grep -o '<a class="signin"[^>]*>' "$f" | sed 's/^/           /'
+    FAIL=1; DOOR=1
+  fi
+done < <(find . -name index.html | sort)
+[ "$DOOR" = 0 ] && say PASS "every page carries one way in to the mail, at /mail/ exactly, and /mailbox/ and /pilot/ stay shut"
 
 # The mark, by fingerprint.
 if [ ! -f assets/logo-mark-512.png ]; then

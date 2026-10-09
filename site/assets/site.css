@@ -20,6 +20,7 @@
   --gold-l: #ECD68F;
   --crim:   #61262C;   /* the peaks, pixel (200,300) */
   --line:   #23262E;
+  --goldbg: #221C10;   /* the beam, dimmed to a ground a button can sit on */
   --line2:  #1B1E25;
   --sans: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
   --arab: 'IBM Plex Sans Arabic', 'IBM Plex Sans', system-ui, sans-serif;
@@ -67,6 +68,24 @@ header.top {
 .mi img { display: block; margin: -10px; }
 .wm { font-weight: 600; font-size: 17px; letter-spacing: -0.01em; }
 
+/* The way in to the mail. The owner's ruling of 9 October: this is the screen
+   people reach their mail from, and there is no mail application of ours, so
+   the door must be visible — not buried in a footer. It sits in the top bar
+   beside the language menu, which costs the first screen nothing because the
+   bar is already there. `rel="nofollow"` because a sign-in form is not
+   something to offer a crawler; keeping it out of the index is the server's
+   work, and naming the path in robots.txt would only publish it. */
+.top-right { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.signin {
+  display: inline-flex; align-items: center;
+  min-block-size: 38px; padding: 7px 16px; border-radius: 999px;
+  border: 1px solid var(--gold); color: var(--gold);
+  font-size: 14px; font-weight: 600; white-space: nowrap;
+}
+.signin:hover, .signin:focus-visible { background: var(--goldbg); color: var(--gold-l); text-decoration: none; }
+html[lang="ar"] .signin { font-family: var(--arab); }
+.signin-row { margin-block-start: clamp(20px, 2.8vw, 28px); }
+
 .menus { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
 .menu { position: relative; }
 .menu > summary {
@@ -88,7 +107,12 @@ header.top {
   transform: rotate(45deg);
 }
 .menu > summary:hover { background: var(--card2); color: var(--ink); }
-.menu[open] > summary { background: var(--card2); color: var(--ink); font-weight: 600; }
+/* State is shown by the ground and the chevron, never by the weight. A
+   summary that goes bold when it opens is WIDER when it opens, and in a bar
+   that wraps that changes the number of rows: at 390 the German label pushed
+   the top bar to two lines shut and one line open, so opening the language
+   menu lifted the mark from y=12 to y=8. A menu may not move the page. */
+.menu[open] > summary { background: var(--card2); color: var(--ink); }
 .menu[open] > summary::after { margin-block-start: 3px; transform: rotate(-135deg); }
 .menu > summary[lang="ar"] { font-family: var(--arab); }
 

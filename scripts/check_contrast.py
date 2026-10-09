@@ -34,6 +34,8 @@ PAIRS = [
     ('the heading on the page',          '--ink',    '--ground', 3.0),
     ('the copyright line',               '--muted',  '--ground', 4.5),
     ('the dot between two links',        '--muted',  '--ground', 3.0),
+    ('the way in to the mail',           '--gold',   '--ground', 4.5),
+    ('the same, with the pointer on it', '--gold-l', '--goldbg', 4.5),
 ]
 
 
