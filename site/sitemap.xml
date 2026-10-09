@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Every page of mono-peak.com, and nothing else.
+
+  Five addresses, each one the address its own page calls canonical, each with
+  the language versions that page itself names. scripts/check_sitemap.py walks
+  this list against the tree in both directions, so a page added later and
+  forgotten here goes red before it is ever published.
+
+  The webmail’s own paths are deliberately absent. They belong to another
+  application on this domain, and a sitemap is an invitation to be indexed.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://mono-peak.com/</loc>
+    <lastmod>2026-10-09</lastmod>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://mono-peak.com/sv/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mono-peak.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://mono-peak.com/de/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://mono-peak.com/ar/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mono-peak.com/"/>
+  </url>
+  <url>
+    <loc>https://mono-peak.com/sv/</loc>
+    <lastmod>2026-10-09</lastmod>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://mono-peak.com/sv/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mono-peak.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://mono-peak.com/de/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://mono-peak.com/ar/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mono-peak.com/"/>
+  </url>
+  <url>
+    <loc>https://mono-peak.com/en/</loc>
+    <lastmod>2026-10-09</lastmod>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://mono-peak.com/sv/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mono-peak.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://mono-peak.com/de/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://mono-peak.com/ar/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mono-peak.com/"/>
+  </url>
+  <url>
+    <loc>https://mono-peak.com/de/</loc>
+    <lastmod>2026-10-09</lastmod>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://mono-peak.com/sv/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mono-peak.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://mono-peak.com/de/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://mono-peak.com/ar/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mono-peak.com/"/>
+  </url>
+  <url>
+    <loc>https://mono-peak.com/ar/</loc>
+    <lastmod>2026-10-09</lastmod>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://mono-peak.com/sv/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mono-peak.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://mono-peak.com/de/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://mono-peak.com/ar/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mono-peak.com/"/>
+  </url>
+</urlset>

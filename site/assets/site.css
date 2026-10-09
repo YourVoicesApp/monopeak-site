@@ -1,0 +1,190 @@
+/* mono-peak.com — the company's front door.
+   No JavaScript. No third-party request: the fonts are served from here.
+   Logical properties throughout, so Arabic is the same design mirrored,
+   not a translation laid over a left-to-right layout.
+
+   The page is dark because the mark is. `logo-mark-512.png` carries an opaque
+   ground of its own, so a light page would show it as a black square; --ground
+   is that file's own pixel, read out of it rather than chosen:
+       (2,2) = rgb(13, 14, 18) = #0D0E12
+   The accents are sampled the same way — the beam, the peaks, the tower. */
+
+:root {
+  --ground: #0D0E12;   /* the mark's own ground, pixel (2,2) */
+  --card:   #15171C;
+  --card2:  #1A1D24;
+  --ink:    #ECEAE5;
+  --ink2:   #BDB9B2;
+  --muted:  #8E8A83;
+  --gold:   #DABD61;   /* the beam, pixel (200,195) */
+  --gold-l: #ECD68F;
+  --crim:   #61262C;   /* the peaks, pixel (200,300) */
+  --line:   #23262E;
+  --line2:  #1B1E25;
+  --sans: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+  --arab: 'IBM Plex Sans Arabic', 'IBM Plex Sans', system-ui, sans-serif;
+  --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, monospace;
+  --disp: Newsreader, Georgia, 'Times New Roman', serif;
+  --pad: clamp(20px, 5vw, 96px);
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 17px;
+  line-height: 1.6;
+}
+html[lang="ar"] body { font-family: var(--arab); }
+
+main, header.top, footer {
+  max-width: 1000px;
+  margin-inline: auto;
+  padding-inline: var(--pad);
+}
+
+a { color: var(--gold); text-decoration: none; }
+a:hover, a:focus-visible { color: var(--gold-l); text-decoration: underline; }
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 4px; }
+
+/* ---------------------------------------------------------------- the top */
+header.top {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px; flex-wrap: wrap;
+  padding-block: 18px;
+}
+.mark { display: inline-flex; align-items: center; gap: 10px; color: var(--ink); }
+.mark:hover { text-decoration: none; color: var(--ink); }
+/* The mark is 512px of artwork with roughly a third of it empty ground, so
+   shrunk to 30px it reads as a smudge. These boxes crop the ground away and
+   show the lighthouse larger, without cutting a second version of a picture
+   that is the company's own. */
+.mi { display: block; inline-size: 30px; block-size: 30px; overflow: hidden; border-radius: 7px; }
+.mi img { display: block; margin: -10px; }
+.wm { font-weight: 600; font-size: 17px; letter-spacing: -0.01em; }
+
+.menus { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.menu { position: relative; }
+.menu > summary {
+  list-style: none; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 8px;
+  min-block-size: 38px; padding: 7px 14px; border-radius: 999px;
+  font-size: 14px; font-weight: 500; color: var(--ink2);
+  border: 1px solid var(--line);
+}
+.menu > summary::-webkit-details-marker { display: none; }
+.menu > summary::after {
+  content: ""; inline-size: 6px; block-size: 6px; margin-block-start: -3px;
+  /* Physical borders on purpose, the lesson the Z site paid for: logical ones
+     are right for layout and wrong for a glyph — `border-inline-end` is the
+     LEFT border in Arabic, so a chevron built from it points sideways there.
+     A chevron meaning «this opens downwards» does not mirror. */
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg);
+}
+.menu > summary:hover { background: var(--card2); color: var(--ink); }
+.menu[open] > summary { background: var(--card2); color: var(--ink); font-weight: 600; }
+.menu[open] > summary::after { margin-block-start: 3px; transform: rotate(-135deg); }
+.menu > summary[lang="ar"] { font-family: var(--arab); }
+
+.menu-panel {
+  position: absolute; z-index: 20;
+  inset-inline-end: 0; inset-block-start: calc(100% + 9px);
+  min-inline-size: 196px; padding: 7px;
+  background: var(--card); border: 1px solid var(--line);
+  border-radius: 12px; box-shadow: 0 14px 38px rgba(0, 0, 0, 0.55);
+}
+.menu-item {
+  display: block; padding: 9px 12px; border-radius: 8px;
+  font-size: 15px; color: var(--ink); white-space: nowrap;
+}
+.menu-item:hover { background: var(--card2); text-decoration: none; color: var(--ink); }
+.menu-item.on { font-weight: 600; background: var(--card2); color: var(--gold); }
+.menu-item[lang="ar"] { font-family: var(--arab); }
+
+/* ---------------------------------------------------------------- the hero */
+.hero { padding-block-start: clamp(12px, 1.6vw, 14px); }
+.hero-mark { display: block; inline-size: 72px; block-size: 72px; overflow: hidden; border-radius: 15px; }
+.hero-mark img { display: block; margin: -24px; }
+.hero-mark.big { inline-size: 128px; block-size: 128px; border-radius: 22px; }
+.hero-mark.big img { margin: -42px; }
+h1 {
+  margin: clamp(18px, 2.2vw, 22px) 0 0;
+  font-family: var(--disp);
+  font-size: clamp(38px, 4.8vw, 46px);
+  font-weight: 600; line-height: 1.04; letter-spacing: -0.02em;
+}
+html[lang="ar"] h1 { font-family: var(--arab); }
+.hero-idea {
+  margin: clamp(11px, 1.4vw, 15px) 0 0;
+  max-inline-size: 48ch;
+  font-size: clamp(19px, 2.1vw, 23px);
+  line-height: 1.3; color: var(--ink);
+}
+.hero-word {
+  margin: 11px 0 0; max-inline-size: 58ch;
+  font-size: 16px; color: var(--muted);
+}
+
+/* ---------------------------------------------------------------- sections */
+section + section { margin-block-start: clamp(30px, 3.1vw, 34px); }
+h2 {
+  margin: 0 0 12px;
+  font-size: 13px; font-weight: 600; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--muted);
+}
+html[lang="ar"] h2 { font-family: var(--arab); text-transform: none; letter-spacing: 0; font-size: 15px; }
+.lead { margin: 0; max-inline-size: 72ch; color: var(--ink2); }
+
+.projs { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); }
+.proj {
+  padding: 17px 20px 15px;
+  background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+}
+.proj h3 {
+  margin: 0 0 8px; font-size: 20px; font-weight: 600; letter-spacing: -0.01em;
+  font-family: var(--sans);
+}
+.proj h3 a { color: var(--ink); }
+.proj h3 a:hover { color: var(--gold); text-decoration: none; }
+.proj p { margin: 0; color: var(--ink2); font-size: 15.5px; line-height: 1.5; }
+.where { margin-block-start: 11px !important; font-family: var(--mono); font-size: 13px; }
+
+/* ---------------------------------------------------------------- chooser */
+body.chooser main { padding-block-start: clamp(28px, 6vw, 64px); }
+.cards {
+  display: grid; gap: 12px; margin-block-start: clamp(24px, 4vw, 38px);
+  grid-template-columns: repeat(auto-fit, minmax(185px, 1fr));
+}
+.card {
+  display: block; padding: 18px 20px;
+  background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+  color: var(--ink);
+}
+.card:hover { border-color: var(--gold); text-decoration: none; }
+.cl { display: block; font-size: 17px; font-weight: 600; }
+.ci { display: block; margin-block-start: 7px; font-size: 14px; color: var(--muted); line-height: 1.45; }
+.card[lang="ar"] .cl, .card[lang="ar"] .ci { font-family: var(--arab); }
+.links {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 10px;
+  margin-block-start: clamp(22px, 3vw, 32px);
+  font-family: var(--mono); font-size: 14px;
+}
+.links .sep { color: var(--muted); }
+
+/* ---------------------------------------------------------------- footer */
+footer {
+  margin-block-start: clamp(56px, 9vw, 104px);
+  padding-block: 28px 40px;
+  border-block-start: 1px solid var(--line);
+  font-size: 14px; color: var(--muted);
+}
+.legal div { line-height: 1.75; }
+.legal div:first-child { color: var(--ink2); font-weight: 600; }
+.legal-contact { margin: 14px 0 0; }
+.copy { margin: 18px 0 0; color: var(--muted); }

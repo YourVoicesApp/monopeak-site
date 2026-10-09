@@ -1,0 +1,17 @@
+# mono-peak.com — what a crawler may do here.
+#
+# Everything on this site is meant to be read, so everything is allowed. There
+# is nothing to sign in to, nothing behind a form, and no page written for a
+# machine instead of a person.
+#
+# This file names one path, the root, and no other. A path written into
+# robots.txt is published to every reader of the file, which is the opposite of
+# hiding it — so anything that is not meant for the index is kept out of it by
+# a header on the server, where naming it costs nothing.
+#
+# scripts/check_site.sh holds this file to all of that.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://mono-peak.com/sitemap.xml
